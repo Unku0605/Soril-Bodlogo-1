@@ -1,0 +1,29 @@
+#include "D:\Hicheel\micoontroller\biedaalt1\bodlogo1.h"
+	 char adc_value;
+	 float volt;	 
+void main(){
+
+	   setup_adc_ports(AN0);
+	   setup_adc(ADC_CLOCK_INTERNAL);
+	   setup_psp(PSP_DISABLED);
+	   setup_spi(FALSE);
+	   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);	   
+	   setup_timer_1(T1_DISABLED);
+	   setup_timer_2(T2_DISABLED,0,1);
+	   setup_comparator(NC_NC_NC_NC);
+	   setup_vref(FALSE);
+	
+	   // TODO: USER CODE!!
+	   set_adc_channel(0);  
+	   while(1)
+	   {
+	       adc_value=read_adc();   
+	       volt=adc_value*0.01965; 
+	       if(volt>=1.5 && volt <=3.0) 
+			printf("Normal \r\n"); 
+	       else if( volt>3.0) 
+			printf("Upper level \r\n"); 
+	       else printf("Lower limit \r\n");  
+	       delay_ms(200);
+	   }
+	}
