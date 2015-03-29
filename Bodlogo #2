@@ -1,0 +1,42 @@
+#include "D:\Hicheel\micoontroller\biedaalt1\bodlogo2.h"
+#define led PIN_D0
+	char adc_value_an0,adc_value_an1;
+	float volt1,volt2;
+	
+void main(){
+	
+	   setup_adc_ports(AN0_AN1_VSS_VREF);
+	   setup_adc(ADC_CLOCK_INTERNAL);
+	   setup_psp(PSP_DISABLED);
+	   setup_spi(FALSE);
+	   setup_timer_0(RTCC_INTERNAL|RTCC_DIV_1);
+	   setup_timer_1(T1_DISABLED);
+	   setup_timer_2(T2_DISABLED,0,1);
+	   setup_comparator(NC_NC_NC_NC);
+	   setup_vref(FALSE);
+	
+	   // TODO: USER CODE!!
+
+	   set_tris_d(0x00);
+  
+	   while(1)
+	   {
+	      
+	      set_adc_channel(0);
+	      adc_value_an0=read_adc();
+	      set_adc_channel(1);
+	      adc_value_an1=read_adc(); 
+	      volt1=25*adc_value_an0+15.8;
+	      volt2=100*adc_value_an1+20.5;
+	      if((volt1>25 && volt1<50) && (volt2>100 && volt2<200))
+	      {
+	         printf("Hewiin \r\n");
+	      }
+	      else
+	      {
+	         output_toggle(led);
+	         printf("warning \r\n");
+	         delay_ms(300);
+	      }
+	   }
+	}
